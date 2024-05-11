@@ -19,32 +19,22 @@ async def start(message: types.Message): # Асинхронная функция
 @dp.message(Command(commands=['info']))
 async def start(message: types.Message):
     print(message.from_user.full_name)
-    # await message.answer(f'Привет, {message}!')
     await message.answer(f'Информация о, {message.chat.first_name} {message.chat.last_name}!')
 
 @dp.message(Command(commands=['user']))
 async def start(message: types.Message):
     print(message.from_user.full_name)
-    # await message.answer(f'Привет, {message}!')
     await message.answer(f'Пользователь, {message.chat.username}!')
 
 @dp.message(Command(commands=['msg']))
 async def start(message: types.Message):
     print(message.from_user.full_name)
-    # await message.answer(f'Привет, {message}!')
     await message.answer(f'Пока, {message}!')
-
-@dp.message(Command(commands=['git']))
-async def start(message: types.Message):
-    print(message.from_user.full_name)
-    # await message.answer(f'Привет, {message}!')
-    await message.answer(f'Проверка работы GIT!')
 
 @dp.message(Command(commands=['стоп'])) # Для нескольких команд один набор действий
 @dp.message(Command(commands=['stop']))
 async def start(message: types.Message):
     print(message.from_user.full_name)
-    # await message.answer(f'Привет, {message}!')
     await message.answer(f'Пока, {message.chat.first_name}!')
 
 async def main(): # Главная асинхронная функция
