@@ -34,6 +34,12 @@ async def start(message: types.Message):
     # await message.answer(f'Привет, {message}!')
     await message.answer(f'Пока, {message}!')
 
+@dp.message(Command(commands=['git']))
+async def start(message: types.Message):
+    print(message.from_user.full_name)
+    # await message.answer(f'Привет, {message}!')
+    await message.answer(f'Проверка работы GIT!')
+
 @dp.message(Command(commands=['стоп'])) # Для нескольких команд один набор действий
 @dp.message(Command(commands=['stop']))
 async def start(message: types.Message):
