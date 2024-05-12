@@ -12,6 +12,7 @@ import logging
 import random
 # Импорт клавиатуры KeyboardStart из файла keyboards.py
 from keyboars.keyboards import keyword
+from randomfox import fox
 
 # Настройка логирования для отображения информационных сообщений
 logging.basicConfig(level=logging.INFO)
@@ -48,7 +49,11 @@ async def stop(message: types.Message):
 # поиск различного текста в сообщении от пользователя (например, нецензурные слова)
 @dp.message(F.text)
 async def msg(message: types.Message):
-    if 'привет' in message.text.lower():
+    if 'fox' in message.text.lower():
+        image_fox = fox()
+        await message.answer('Лови лису!')
+        await message.answer_photo(image_fox)
+    elif 'привет' in message.text.lower():
         await message.reply('И тебе привет!')
     elif 'как дела' in message.text.lower():
         await message.reply('Нормально. А у тебя как?')

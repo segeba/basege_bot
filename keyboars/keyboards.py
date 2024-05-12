@@ -7,10 +7,11 @@ button4 = types.KeyboardButton(text='/rand')
 button5 = types.KeyboardButton(text='djhfk')
 button6 = types.KeyboardButton(text='привет')
 button7 = types.KeyboardButton(text='как дела?')
+button8 = types.KeyboardButton(text='fox')
 
 keyboardStart = [
     [button1, button2, button5],
-    [button3, button4],
+    [button8, button3, button4],
     [button6, button7],
 ]
 
