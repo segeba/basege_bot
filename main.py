@@ -1,44 +1,64 @@
+# Импорт асинхронного ввода/вывода
+import asyncio
+# Импорт файла конфигурации, где обычно хранится токен бота
+import config
+# Импорт основных классов из aiogram
+from aiogram import Bot, Dispatcher, types, F
+# Импорт фильтра команд из aiogram
+from aiogram.filters.command import Command
+# Импорт модуля логирования
+import logging
+# Импорт модуля random для генерации случайных чисел
+import random
 
-import asyncio  # Импорт асинхронного ввода/вывода
-import config  # Импорт файла конфигурации, где обычно хранится токен бота
-from aiogram import Bot, Dispatcher, types  # Импорт основных классов из aiogram
-from aiogram.filters.command import Command  # Импорт фильтра команд из aiogram
-import logging  # Импорт модуля логирования
-import random  # Импорт модуля random для генерации случайных чисел
+# Настройка логирования для отображения информационных сообщений
+logging.basicConfig(level=logging.INFO)
+# Создаем экземпляр бота с токеном из файла config
+bot = Bot(token=config.token)
+# Создаем экземпляр диспетчера
+dp = Dispatcher()
 
-logging.basicConfig(level=logging.INFO) # Настройка логирования для отображения информационных сообщений
-
-# Создание бъекта бота и диспетчера для обработки сообщений
-bot = Bot(token=config.token) # Создаем экземпляр бота с токеном из файла config
-dp = Dispatcher() # Создаем экземпляр диспетчера
-
-@dp.message(Command(commands=['start'])) # Декоратор для обработки команды /start
-async def start(message: types.Message): # Асинхронная функция для реакции на команду /start
-    await message.answer(f'Привет, {message.from_user.full_name}!') # Отправляем приветственное сообщение
-
-@dp.message(Command(commands=['info']))
+# Декоратор для обработки команды /start
+@dp.message(Command(commands=['start']))
+# Асинхронная функция для реакции на команду /start
 async def start(message: types.Message):
-    print(message.from_user.full_name)
-    await message.answer(f'Информация о, {message.chat.first_name} {message.chat.last_name}!')
+    # Отправляем приветственное сообщение
+    await message.answer(f'Привет, {message.from_user.full_name}!')
+
+@dp.message(F.text.lower() =='info')
+# перечисление команд списком через запетую - ['info', 'инфо']
+@dp.message(Command(commands=['info', 'инфо']))
+async def info(message: types.Message):
+    number = random.randint(0,100)
+    await message.answer(f'Случайное число - {number}')
 
 @dp.message(Command(commands=['user']))
-async def start(message: types.Message):
-    print(message.from_user.full_name)
-    await message.answer(f'Пользователь, {message.chat.username}!')
-
-@dp.message(Command(commands=['msg']))
-async def start(message: types.Message):
-    print(message.from_user.full_name)
-    await message.answer(f'Пока, {message}!')
+async def user(msg: types.Message):
+    print(msg.from_user.full_name)
+    await msg.answer(f'Пользователь, {msg.chat.username}!')
 
 @dp.message(Command(commands=['стоп'])) # Для нескольких команд один набор действий
 @dp.message(Command(commands=['stop']))
-async def start(message: types.Message):
+async def stop(message: types.Message):
     print(message.from_user.full_name)
     await message.answer(f'Пока, {message.chat.first_name}!')
 
-async def main(): # Главная асинхронная функция
-    await dp.start_polling(bot) # Запуск бота на опрос сообщений
+# поиск различного текста в сообщении от пользователя (например, нецензурные слова)
+@dp.message(F.text)
+async def msg(message: types.Message):
+    if 'привет' in message.text.lower():
+        await message.reply('И тебе привет!')
+    elif 'как дела' in message.text.lower():
+        await message.reply('Нормально. А у тебя как?')
+    else:
+        await message.reply('Моя твоя не понимать!')
 
-if __name__ == '__main__': # Если файл запущен как основной, а не импортирован
-    asyncio.run(main()) # Запускаем асинхронный цикл
+# Главная асинхронная функция
+async def main():
+    # Запуск бота на опрос сообщений
+    await dp.start_polling(bot)
+
+# Если файл запущен как основной, а не импортирован
+if __name__ == '__main__':
+    # Запускаем асинхронный цикл
+    asyncio.run(main())
