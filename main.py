@@ -11,7 +11,7 @@ import logging
 # Импорт модуля random для генерации случайных чисел
 import random
 # Импорт клавиатуры KeyboardStart из файла keyboards.py
-from keyboards import keyword
+from keyboars.keyboards import keyword
 
 # Настройка логирования для отображения информационных сообщений
 logging.basicConfig(level=logging.INFO)

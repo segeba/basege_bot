@@ -15,4 +15,3 @@ keyboardStart = [
 ]
 
 keyword = types.ReplyKeyboardMarkup(keyboard=keyboardStart, resize_keyboard=True)
-
