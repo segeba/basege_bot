@@ -25,12 +25,12 @@ dp = Dispatcher()
 # Асинхронная функция для реакции на команду /start
 async def start(message: types.Message):
     # Отправляем приветственное сообщение
-    await message.answer(f'Привет, {message.from_user.full_name}!', reply_markup=keyword)
+    await message.answer(f'Привет, {message.from_user.full_name}! \n Список команд: \n /user - имя пользователя \n /rand - случайное число', reply_markup=keyword)
 
-@dp.message(F.text.lower() =='info')
+@dp.message(F.text.lower() =='rand')
 # перечисление команд списком через запетую - ['info', 'инфо']
-@dp.message(Command(commands=['info', 'инфо']))
-async def info(message: types.Message):
+@dp.message(Command(commands=['rand', 'рандом']))
+async def rand(message: types.Message):
     number = random.randint(0,100)
     await message.answer(f'Случайное число - {number}')
 
