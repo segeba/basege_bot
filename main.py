@@ -10,6 +10,8 @@ from aiogram.filters.command import Command
 import logging
 # Импорт модуля random для генерации случайных чисел
 import random
+# Импорт клавиатуры KeyboardStart из файла keyboards.py
+from keyboards import keyword
 
 # Настройка логирования для отображения информационных сообщений
 logging.basicConfig(level=logging.INFO)
@@ -23,7 +25,7 @@ dp = Dispatcher()
 # Асинхронная функция для реакции на команду /start
 async def start(message: types.Message):
     # Отправляем приветственное сообщение
-    await message.answer(f'Привет, {message.from_user.full_name}!')
+    await message.answer(f'Привет, {message.from_user.full_name}!', reply_markup=keyword)
 
 @dp.message(F.text.lower() =='info')
 # перечисление команд списком через запетую - ['info', 'инфо']
