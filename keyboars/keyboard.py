@@ -8,11 +8,13 @@ button5 = types.KeyboardButton(text='djhfk')
 button6 = types.KeyboardButton(text='привет')
 button7 = types.KeyboardButton(text='как дела?')
 button8 = types.KeyboardButton(text='покажи лису')
+button9 = types.KeyboardButton(text='хочу работу')
 
 keyboardStart = [
     [button1, button8],
     [button3, button4, button5],
     [button6, button7, button2],
+    [button9]
 ]
 
 keyword = types.ReplyKeyboardMarkup(keyboard=keyboardStart, resize_keyboard=True)
