@@ -12,9 +12,9 @@ router = Router()
 # Асинхронная функция для реакции на команду /start
 async def start(message: types.Message):
     # Отправляем приветственное сообщение
-    await message.answer(f'Привет, {message.from_user.full_name}! '
-                         f'\n Список команд: \n /user - имя пользователя \n /rand - случайное число',
-                         reply_markup=keyword)
+    await message.answer(f'Привет, {message.from_user.full_name}!', reply_markup=keyword)
+                         #f'\n Список команд: \n /user - имя пользователя \n /rand - случайное число',
+
 
 
 @router.message(Command(commands=['rand', 'рандом']))

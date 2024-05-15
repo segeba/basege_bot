@@ -12,7 +12,8 @@ available_jobs = [
     'Маркетолог',
     'Менеджер',
     'Аналитик',
-    'Бухгалтер'
+    'Бухгалтер',
+    'Водитель'
 ]
 
 available_grades = [
@@ -37,21 +38,26 @@ async def start(message: types.Message, state: FSMContext):
 async def jobs(message: types.Message, state: FSMContext):
     await message.answer(f'{message.chat.first_name}, Оцените ваш уровень по профессии "{message.text}"',
                          reply_markup=make_keyboard(available_grades))
+    await state.update_data(job=message.text)
     await state.set_state(Choice.grade)
 
 
 @router.message(Choice.job)
 async def job_incorrectly(message: types.Message):
-    await message.answer('Неправильно. Попробуйте ещё раз', reply_markup=make_keyboard(available_jobs))
+    await message.answer('Такой должности сейчас нет. Выберите из предложенных вариантов!', reply_markup=make_keyboard(available_jobs))
 
 
 @router.message(Choice.grade, F.text.in_(available_grades))
 async def grade(message: types.Message, state: FSMContext):
-    await message.answer(f'Вы всё прошли, с вами свяжутся наши hr {message.text}',
+    data = await state.get_data()
+    job = data.get('job')
+    await message.answer(f'Вы прошли опрос полностью! Вы выбрали профессию "{job}" с уровнем знаний '
+                         f'"{message.text}"! В случае положительного решения Вам ответят в ближайшее время!',
                          reply_markup=types.ReplyKeyboardRemove())
+    await message.answer('До свидания!!')
     await state.clear()
 
 
 @router.message(Choice.grade)
 async def grade_incorrectly(message: types.Message):
-    await message.answer('Неправильно. Попробуйте ещё раз', reply_markup=make_keyboard(available_grades))
+    await message.answer('Ответ не верный. Выберите из предложенных вариантов!', reply_markup=make_keyboard(available_grades))
